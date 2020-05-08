@@ -4,6 +4,8 @@ import sys
 from typing import Any, Dict, List
 import requests
 from rich.console import Console
+from rich.table import Table
+from rich import box
 
 console = Console()
 
@@ -54,25 +56,48 @@ def get_license(license: Dict[str, str]) -> str:
 
 def print_info(repo_info: Dict[str, str]) -> str:
     console.print("Basic info about the repository: \n",
-                  style="magenta 14")
-    print("Name: " + repo_info['name'])
-    print(f"Repository Size: {num_kilobytes_to_size_str(repo_info['size'])}")
-    print(f"Repository License: {get_license(repo_info['license'])}")
-    print(f"Repository Description: {repo_info['description']}")
+                  style="#6639a6")
 
-    print("Languages used:")
-    print(','.join(get_languages(repo_info['languages_url'])))
+    console.print("Name:", style="#6fe7dd", end='')
+    console.print(repo_info['name'], style="#3490de")
 
-    print("Repository Statistics:")
-    print(f"Forks: {repo_info['forks']}")
-    print(f"Watchers: {repo_info['watchers']}")
-    print(f"Open Issues: {repo_info['open_issues']}")
-    print(f"Total Stars: {repo_info['stargazers_count']}")
+    console.print("Repository Size:", style="#6fe7dd", end='')
+    console.print(
+        f"{num_kilobytes_to_size_str(repo_info['size'])}", style="#3490de")
 
-    print("GIT:   " + repo_info['git_url'])
-    print("SSH:   " + repo_info['ssh_url'])
-    print("SVN:   " + repo_info['svn_url'])
-    print("Clone: " + repo_info['clone_url'])
+    console.print("Repository License: ", style="#6fe7dd", end='')
+    console.print(f"{get_license(repo_info['license'])}", style="#3490de")
+
+    console.print("Repository Description:", style="#6fe7dd")
+    console.print(f"{repo_info['description']}", style="#3490de")
+
+    console.print("Languages used: ", style="#6fe7dd")
+    console.print(','.join(get_languages(
+        repo_info['languages_url'])), style="#3490de")
+
+    console.print("Repository Statistics:", style="#6fe7dd")
+
+    stats_table = Table(title="Repository Statistics:",
+                        style="#6639a6", box=box.SQUARE)
+    stats_table.add_column("Statistics", justify="right",
+                           style="#6fe7dd", no_wrap=True)
+    stats_table.add_column("Count", justify="right", style="green")
+    stats_table.add_row("Forks", f"{repo_info['forks']}")
+    stats_table.add_row("Watchers", f"{repo_info['watchers']}")
+    stats_table.add_row("Open Issues", f"{repo_info['open_issues']}")
+    stats_table.add_row("Total Stars", f"{repo_info['stargazers_count']}")
+    console.print(stats_table)
+
+    url_table = Table(title="URLs of the repository",
+                      style="#6639a6", box=box.SQUARE)
+    url_table.add_column("Type", justify="right",
+                         style="#6fe7dd", no_wrap=True)
+    url_table.add_column("URL", justify="right", style="green")
+    url_table.add_row("GIT",  f"{repo_info['git_url']}")
+    url_table.add_row("SSH",  f"{repo_info['ssh_url']}")
+    url_table.add_row("SNV",  f"{repo_info['svn_url']}")
+    url_table.add_row("Clone",  f"{repo_info['clone_url']}")
+    console.print(url_table)
 
 
 def main(args: argparse.Namespace) -> None:
