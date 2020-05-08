@@ -24,13 +24,13 @@ def connection(url='http://www.google.com/', timeout=5) -> True:
     try:
         req = requests.get(url, timeout=timeout)
         req.raise_for_status()
-        print("You're connected to internet\n")
+        console.print("You're connected to internet\n", style="bright_green")
         return True
     except requests.HTTPError as e:
-        print("Checking internet connection failed, status code {0}.".format(
-            e.response.status_code))
+        console.print("Checking internet connection failed, status code {0}.".format(
+            e.response.status_code), style="bright_red")
     except requests.ConnectionError:
-        print("No internet connection available.")
+        console.print("No internet connection available.", style="bright_red")
     return False
 
 
@@ -56,7 +56,7 @@ def get_license(license: Dict[str, str]) -> str:
 
 def print_info(repo_info: Dict[str, str]) -> str:
     console.print("Basic info about the repository: \n",
-                  style="#6639a6")
+                  style="#ffd31d")
 
     console.print("Name:", style="#6fe7dd", end='')
     console.print(repo_info['name'], style="#3490de")
@@ -72,13 +72,11 @@ def print_info(repo_info: Dict[str, str]) -> str:
     console.print(f"{repo_info['description']}", style="#3490de")
 
     console.print("Languages used: ", style="#6fe7dd")
-    console.print(','.join(get_languages(
+    console.print(', '.join(get_languages(
         repo_info['languages_url'])), style="#3490de")
 
-    console.print("Repository Statistics:", style="#6fe7dd")
-
     stats_table = Table(title="Repository Statistics:",
-                        style="#6639a6", box=box.SQUARE)
+                        style="#6639a6", title_style="#6fe7dd", box=box.SQUARE)
     stats_table.add_column("Statistics", justify="right",
                            style="#6fe7dd", no_wrap=True)
     stats_table.add_column("Count", justify="right", style="green")
@@ -89,7 +87,7 @@ def print_info(repo_info: Dict[str, str]) -> str:
     console.print(stats_table)
 
     url_table = Table(title="URLs of the repository",
-                      style="#6639a6", box=box.SQUARE)
+                      style="#6639a6", title_style="#6fe7dd", box=box.SQUARE)
     url_table.add_column("Type", justify="right",
                          style="#6fe7dd", no_wrap=True)
     url_table.add_column("URL", justify="right", style="green")
