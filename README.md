@@ -1,6 +1,6 @@
-# repo-lens
+# repo-glance
 Is a Python script to get details about a repository without cloning
-it. All the information are retrieved using the [GitHub API](http://developer.github.com/v3/repos/).
+it. All the information is retrieved using the [GitHub API](http://developer.github.com/v3/repos/).
 
 <img src="https://i.postimg.cc/L85j4KZn/Annotation-2020-05-08-172622.png" 
     height="500" style="display: block;margin-left: auto;margin-right: auto;">
@@ -41,7 +41,7 @@ the script into a directory of your choice, and then add that directory to your
 ## Usage
 
 ```
-python -m repo-lens
+python -m repo-glance
 ```
 
 ## License
