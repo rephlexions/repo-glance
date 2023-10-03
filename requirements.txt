@@ -1,4 +1,4 @@
-﻿certifi==2022.12.7
+certifi==2022.12.7
 chardet==3.0.4
 colorama==0.4.3
 commonmark==0.9.1
@@ -8,4 +8,4 @@ Pygments==2.7.4
 requests==2.23.0
 rich==1.0.0
 typing-extensions==3.7.4.2
-urllib3==1.26.5
+urllib3==1.26.17
